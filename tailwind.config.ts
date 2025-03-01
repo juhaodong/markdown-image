@@ -11,17 +11,16 @@ const config = {
   theme: {
     extend: {
       colors: {
-        main: '#a388ee',
-        mainAccent: '#9e66ff', // not needed for shadcn components
+        main: '#88aaee',
         overlay: 'rgba(0,0,0,0.8)',
 
         // light mode
-        bg: '#e3dff2',
+        bg: '#dfe8f2',
         text: '#000',
         border: '#000',
 
         // dark mode
-        darkBg: '#272733',
+        darkBg: '#272c33',
         darkText: '#eeefe9',
         darkBorder: '#000',
         secondaryBlack: '#212121', // opposite of plain white, not used pitch black because borders and box-shadows are that color
@@ -54,7 +53,7 @@ const config = {
       w400: { max: '400px' },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [require('tailwindcss-animate'), require('@tailwindcss/typography')],
 } satisfies Config
 
 export default config

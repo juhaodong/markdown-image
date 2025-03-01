@@ -17,17 +17,16 @@ export default function Nav() {
         )}
         href="/"
       >
-        Home
+        文字
       </Link>
-      <Link
+      <div
         className={clsx(
           'flex h-full items-center justify-center uppercase',
           path === '/work' ? 'bg-black text-white' : 'text-text bg-main',
         )}
-        href="/work"
       >
-        Projects
-      </Link>
+        我在德国写代码
+      </div>
       <ThemeSwitcher />
     </nav>
   )
