@@ -3,6 +3,7 @@ import { Archivo } from 'next/font/google'
 import './globals.css'
 import Nav from '@/components/nav'
 import { ThemeProvider } from '@/components/theme-provider'
+import { Analytics } from '@vercel/analytics/react'
 
 const archivo = Archivo({ subsets: ['latin'] })
 
@@ -46,6 +47,7 @@ export default function RootLayout({
             </main>
           </div>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   )
