@@ -19,14 +19,16 @@ export default function Nav() {
       >
         输入文字
       </Link>
-      <div
+      <Link
+        href="https://www.xiaohongshu.com/user/profile/5fdf012800000000010002d7"
         className={clsx(
           'flex h-full items-center justify-center uppercase',
           path === '/work' ? 'bg-black text-white' : 'bg-main text-text',
         )}
       >
-        Rednote: 我在德国写代码
-      </div>
+        <img src="/rednote.png" width="24" className={'mr-2 rounded'}></img>
+        我在德国写代码
+      </Link>
       <ThemeSwitcher />
     </nav>
   )
