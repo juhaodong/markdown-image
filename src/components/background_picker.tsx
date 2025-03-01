@@ -13,10 +13,11 @@ const backgroundOptions = [
   { label: '天空蓝', value: '#d8eeff' }, // 清新的天空蓝
   { label: '薄荷绿', value: '#e5f8e0' }, // 自然的薄荷绿色
   { label: '薰衣紫', value: '#f2e7fc' }, // 优雅的薰衣草紫色
-];
+]
 
-
-export default function BackgroundPicker({ onBackgroundSelect }: BackgroundPickerProps) {
+export default function BackgroundPicker({
+  onBackgroundSelect,
+}: BackgroundPickerProps) {
   const [selectedValue, setSelectedValue] = useState(backgroundOptions[0].value)
 
   function handleBackgroundChange(value: string) {
@@ -31,7 +32,7 @@ export default function BackgroundPicker({ onBackgroundSelect }: BackgroundPicke
         {backgroundOptions.map((option, index) => (
           <Card
             key={index}
-            onClick={() => handleBackgroundChange(option.value)}
+            onClick={() =>handleBackgroundChange(option.value)}
             className={`cursor-pointer border ${
               selectedValue === option.value ? 'border-green-600 shadow-sm' : ''
             } rounded border-2 border-black`}
@@ -42,8 +43,10 @@ export default function BackgroundPicker({ onBackgroundSelect }: BackgroundPicke
             }}
           >
             <div
-              className={`flex items-center justify-center h-full text-center font-semibold text-sm ${
-                selectedValue === option.value ? 'text-blue-700' : 'text-gray-800'
+              className={`flex h-full items-center justify-center text-center text-sm font-semibold ${
+                selectedValue === option.value
+                  ? 'text-blue-700'
+                  : 'text-gray-800'
               }`}
               style={{
                 backgroundColor: 'rgba(255, 255, 255, 0.4)', // Label overlay for visibility

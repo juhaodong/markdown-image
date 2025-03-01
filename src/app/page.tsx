@@ -123,6 +123,7 @@ export default function Home() {
   }, [backgroundStyle, dialog])
 
   async function refreshImage() {
+    setLoading(true)
     const html = md.render(value)
     const element = document.createElement('div')
     element.innerHTML = html
@@ -175,13 +176,12 @@ export default function Home() {
     }
     setImages(temp)
     document.body.removeChild(element)
+    setLoading(false)
   }
 
   async function openPreview() {
-    setLoading(true)
     setDialog(true)
     await refreshImage()
-    setLoading(false)
   }
 
   return (
