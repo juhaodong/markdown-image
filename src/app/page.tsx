@@ -1,5 +1,5 @@
 'use client'
-import { IconType, SiGithub, SiLinkedin } from '@icons-pack/react-simple-icons'
+import { IconType, SiGithub } from '@icons-pack/react-simple-icons'
 import { Textarea } from '@/components/ui/textarea'
 import { useEffect, useRef, useState } from 'react'
 import { Button } from '@/components/ui/button'
@@ -72,10 +72,6 @@ export default function Home() {
     {
       icon: SiGithub,
       href: 'https://github.com/juhaodong/markdown-image',
-    },
-    {
-      icon: SiLinkedin,
-      href: 'https://www.linkedin.com/in/haodong-ju/',
     },
   ]
   const [backgroundStyle, setBackgroundStyle] = useState<string>('#ffffff') // Default background style

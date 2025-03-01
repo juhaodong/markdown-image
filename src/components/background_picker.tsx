@@ -7,16 +7,14 @@ interface BackgroundPickerProps {
 
 // Simplified background options with only raw values
 const backgroundOptions = [
-  { label: '纯白', value: '#ffffff' },
-  {
-    label: '淡雅黄色',
-    value: '#e4e4ba',
-  },
-  { label: '渐变彩虹', value: 'linear-gradient(45deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1)' },
-  { label: '冷色渐变', value: 'linear-gradient(120deg, #89f7fe, #66a6ff)' },
-  { label: '暖色渐变', value: 'linear-gradient(90deg, #ff9a9e, #fecfef)' },
-  { label: '绿色过渡', value: 'linear-gradient(135deg, #a8edea, #fed6e3)' },
-]
+  { label: '纯白', value: '#ffffff' }, // 简约干净的纯白
+  { label: '米白', value: '#f8f4d9' }, // 柔和的米黄色
+  { label: '樱花粉', value: '#fde6e6' }, // 浪漫的樱花色
+  { label: '天空蓝', value: '#d8eeff' }, // 清新的天空蓝
+  { label: '薄荷绿', value: '#e5f8e0' }, // 自然的薄荷绿色
+  { label: '薰衣紫', value: '#f2e7fc' }, // 优雅的薰衣草紫色
+];
+
 
 export default function BackgroundPicker({ onBackgroundSelect }: BackgroundPickerProps) {
   const [selectedValue, setSelectedValue] = useState(backgroundOptions[0].value)
