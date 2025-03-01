@@ -105,7 +105,7 @@ export default function Home() {
   const [dialog, setDialog] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  function setBackgroundStyleAndRefreshImg(style) {
+  function setBackgroundStyleAndRefreshImg(style: string) {
     setBackgroundStyle(style)
   }
 
