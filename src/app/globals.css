@@ -4,35 +4,44 @@
 @plugin "@tailwindcss/typography";
 
 :root {
-  --sb-track-color: #ffffff;
-  --sb-thumb-color: #000000;
+    --sb-track-color: #ffffff;
+    --sb-thumb-color: #000000;
 }
 
 body {
-  @apply dark:bg-secondaryBlack flex min-h-[100dvh] w-full items-center justify-center
-  bg-white font-bold selection:bg-black selection:text-white portrait:h-[100dvh];
+    @apply dark:bg-secondaryBlack flex min-h-[100dvh] w-full items-center justify-center
+    bg-white font-bold selection:bg-black selection:text-white portrait:h-[100dvh];
 }
 
 ::-webkit-scrollbar {
-  width: 16px;
+    width: 16px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--sb-track-color);
+    background: var(--sb-track-color);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--sb-thumb-color);
+    background: var(--sb-thumb-color);
 }
 
 @supports not selector(::-webkit-scrollbar) {
-  .main {
-    scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
-  }
+    .main {
+        scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+    }
 }
 
 @media (max-width: 400px) {
-  .main {
-    max-height: calc(100dvh - 40px) !important;
-  }
+    .main {
+        max-height: calc(100dvh - 40px) !important;
+    }
+}
+
+@font-face {
+    font-family: 'genryumin';
+    src: url('/GenRyuMin.ttf');
+}
+
+.text-zh {
+    font-family: 'genryumin', serif !important;
 }
