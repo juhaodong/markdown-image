@@ -10,10 +10,10 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog'
 import markdownit from 'markdown-it'
 import html2canvas from 'html2canvas'
+import { Spinner } from '@/components/ui/spiner'
 
 const md = markdownit({
   typographer: true,
@@ -38,7 +38,7 @@ md.configure({
     block: {
       rules: [
         'blockquote',
-        // 'code',
+        'code',
         // 'fences',
         'heading',
         //'hr',
@@ -82,7 +82,30 @@ export default function Home() {
   const [pageHeight, setPageHeight] = useState(1350 / 2)
   const [images, setImages] = useState<string[]>([])
   const sections = useRef<HTMLDivElement[]>([])
-  useEffect(() => {
+  useEffect(() => {}, [value, pageHeight])
+
+  function downloadPics() {
+    const contents = document.getElementsByClassName('prose-xl')
+    const uuid = uuidv4()
+
+    images.forEach((content, index) => {
+      // Use html2canvas to convert the element into a canvas
+
+      // Create a temporary link element to trigger a download
+      const link = document.createElement('a')
+      link.href = content
+      link.download = `${uuid}-${index + 1}.png`
+      // Automatically click the link to trigger the download
+      link.click()
+    })
+  }
+
+  const [dialog, setDialog] = useState(false)
+  const [loading, setLoading] = useState(false)
+
+  async function openPreview() {
+    setLoading(true)
+    setDialog(true)
     const html = md.render(value)
     const element = document.createElement('div')
     element.innerHTML = html
@@ -93,7 +116,6 @@ export default function Home() {
     element.style.left = '-9999px'
     element.className = 'prose-2xl'
     document.body.appendChild(element)
-    console.log(element)
     const tmp: HTMLDivElement[] = []
     let currentHeight = 0
     Array.from(element.children).forEach((child) => {
@@ -115,36 +137,35 @@ export default function Home() {
       }
     })
     sections.current = tmp
-    document.body.removeChild(element)
-  }, [value,pageHeight])
+    element.innerHTML = ''
+    sections.current.forEach((it) => {
+      const newNode = document.createElement('div')
+      newNode.appendChild(it)
+      newNode.style.width = pageWidth.current + 'px'
+      newNode.style.height = pageHeight + 'px'
+      newNode.style.padding = '16px'
+      newNode.className = 'bg-white text-black p-2 px-4 prose-xl'
+      element.appendChild(newNode)
+    })
 
-  function downloadPics() {
     const contents = document.getElementsByClassName('prose-xl')
     console.log(contents)
-    const uuid = uuidv4()
-    Array.from(contents).forEach((content, index) => {
+    const temp = []
+    for (const content of Array.from(contents)) {
       const element = content as HTMLElement
-
-      // Use html2canvas to convert the element into a canvas
-      html2canvas(element).then((canvas) => {
-        // Convert the canvas to a data URL
-        const imgData = canvas.toDataURL('image/png')
-
-        // Create a temporary link element to trigger a download
-        const link = document.createElement('a')
-        link.href = imgData
-        link.download = `${uuid}-${index + 1}.png`
-        // Automatically click the link to trigger the download
-        link.click()
-      })
-    })
+      const image = (await html2canvas(element)).toDataURL('image/png')
+      temp.push(image)
+    }
+    setImages(temp)
+    setLoading(false)
+    document.body.removeChild(element)
   }
 
   return (
     <div className="flex h-full flex-col text-xl  leading-[1.7] w600:text-lg w400:text-base">
       <Textarea
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onInput={(e) => setValue(e.currentTarget.value)}
         className="flex-grow"
         rows={20}
         style={{
@@ -162,39 +183,50 @@ export default function Home() {
           )
         })}
         <div className="flex-grow"></div>
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button size={'lg'} className={'text-lg'}>
-              预览
-            </Button>
-          </DialogTrigger>
+        <Button
+          disabled={!value}
+          onClick={(e) => openPreview()}
+          size={'lg'}
+          className={'text-lg'}
+        >
+          预览
+        </Button>
+        <Dialog open={dialog} onOpenChange={setDialog}>
           <DialogContent>
             <DialogHeader>
               <DialogTitle>确认效果</DialogTitle>
             </DialogHeader>
-            <div>背景颜色</div>
-            <div className="flex overflow-x-scroll  pb-4">
-              {sections.current.map((it, index) => (
-                <div className="prose-xl mr-4" key={index}>
-                  <div
-                    className={'h-full overflow-hidden bg-white p-2 px-4'}
-                    style={{
-                      width: pageWidth.current + 'px',
-                    }}
-                    dangerouslySetInnerHTML={{ __html: it.innerHTML }}
-                  ></div>
+            {loading ? (
+              <Spinner></Spinner>
+            ) : (
+              <>
+
+                <div>背景颜色</div>
+                <div className="flex overflow-x-auto  pb-4">
+                  {images.map((it, index) => (
+                    <div className="mr-4" key={index}>
+                      <div
+                        className={'overflow-hidden bg-white'}
+                        style={{
+                          width: '300px',
+                        }}
+                      >
+                        <img src={it} />
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-            <DialogFooter>
-              <Button
-                onClick={(e) => {
-                  downloadPics()
-                }}
-              >
-                下载图片
-              </Button>
-            </DialogFooter>
+                <DialogFooter>
+                  <Button
+                    onClick={(e) => {
+                      downloadPics()
+                    }}
+                  >
+                    下载图片
+                  </Button>
+                </DialogFooter>
+              </>
+            )}
           </DialogContent>
         </Dialog>
       </div>
