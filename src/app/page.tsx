@@ -216,7 +216,7 @@ export default function Home() {
             size={'lg'}
             className={'mr-4 bg-green-400 text-lg'}
           >
-            黏贴
+            粘贴
           </Button>
           <Button
             disabled={!value}
