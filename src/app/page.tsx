@@ -116,7 +116,7 @@ export default function Home() {
     })
     sections.current = tmp
     document.body.removeChild(element)
-  }, [value])
+  }, [value,pageHeight])
 
   function downloadPics() {
     const contents = document.getElementsByClassName('prose-xl')
